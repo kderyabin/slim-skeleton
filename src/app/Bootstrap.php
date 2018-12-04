@@ -2,7 +2,8 @@
 
 namespace App;
 
-use App\Route\IndexRoute;
+use App\Middleware\SampleMiddleware;
+use App\Route\SampleRoute;
 use Kod\BootstrapSlim\Bootstrap as BootstrapSlim;
 
 /**
@@ -13,13 +14,15 @@ class Bootstrap extends BootstrapSlim
 
     public function addAppMiddleware()
     {
-        return parent::addAppMiddleware();
+        return $this->addMiddleware(
+            SampleMiddleware::class
+        );
     }
 
     public function addAppRoutes()
     {
         return $this->addRouteDefinitions(
-            IndexRoute::class
+            SampleRoute::class
         );
     }
 }

@@ -14,13 +14,6 @@ return [
                     'remote_ip' => $_SERVER['REMOTE_ADDR'],
                 ]
             ],
-            'channels' => [
-                [
-                    'handler' => [
-                        'path' => __DIR__ .'/../../var/debug.log'
-                    ]
-                ],
-            ]
         ]);
     }
 ];
