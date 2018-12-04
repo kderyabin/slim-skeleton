@@ -13,7 +13,14 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class StatsMiddleware extends Middleware
 {
-
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @param callable $next
+     * @return ResponseInterface
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, $next)
     {
         $start = microtime(true);
