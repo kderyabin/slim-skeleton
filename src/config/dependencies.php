@@ -1,12 +1,14 @@
 <?php
+
 use \Psr\Container\ContainerInterface;
 
+// dependencies
 return [
-    'renderer' =>  function (ContainerInterface $ci) {
+    'renderer' => function (ContainerInterface $ci) {
         $settings = $ci->get('settings')['renderer'];
         return new Slim\Views\PhpRenderer($settings['template_path']);
     },
-    'logger' =>function (ContainerInterface $ci) {
+    'logger' => function (ContainerInterface $ci) {
         return new \Kod\Logger([
             'message' => [
                 'fields' => [

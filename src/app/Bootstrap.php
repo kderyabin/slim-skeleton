@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Middleware\SampleMiddleware;
+use App\Route\SampleMVCRoute;
 use App\Route\SampleRoute;
 use Kod\BootstrapSlim\Bootstrap as BootstrapSlim;
 
@@ -22,7 +23,8 @@ class Bootstrap extends BootstrapSlim
     public function addAppRoutes()
     {
         return $this->addRouteDefinitions(
-            SampleRoute::class
+            SampleRoute::class,
+            SampleMVCRoute::class
         );
     }
 }

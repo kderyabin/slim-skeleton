@@ -23,7 +23,6 @@ class SampleMiddleware extends Middleware
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, $next)
     {
-        
         $start = round(microtime(true) * 1000);
         /**
          * @var Logger $logger
@@ -32,6 +31,7 @@ class SampleMiddleware extends Middleware
         /**
          * @var ResponseInterface $response
          */
+        $request = $request->withAttribute('title', 'Sample');
         $response = $next($request, $response);
         $data = [
             'response_size' => $response->getBody()->getSize(),
@@ -39,8 +39,7 @@ class SampleMiddleware extends Middleware
             'status' => $response->getStatusCode(),
         ];
 
-        $logger->info('Execution time', $data);
-
+        $logger->info('Middleware stack traversal time', $data);
         return $response;
     }
 }

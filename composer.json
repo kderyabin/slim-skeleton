@@ -34,7 +34,7 @@
     }
   },
   "scripts": {
-    "start": "php -S localhost:8080 -t ./src/public",
+    "start": "php -S localhost:8099 -t ./src/public",
     "test": [
       "@phpcs",
       "@phpunit"

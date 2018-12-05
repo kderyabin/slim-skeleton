@@ -1,10 +1,7 @@
 <?php
-use \Psr\Container\ContainerInterface;
-
+//['settings'] part of the container configuration
 return [
-    'settings' => [
-        'renderer' => [
-            'template_path' => __DIR__ . '/../templates',
-        ],
+    'renderer' => [
+        'template_path' => __DIR__ . '/../templates',
     ],
 ];
