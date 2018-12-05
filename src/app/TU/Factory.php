@@ -16,9 +16,32 @@ use Slim\Http\Response;
 class Factory
 {
 
-    public static function prepareEnv(array $data = []): Environment
+    public static function prepareEnv(string $method, string $path, array $env = [], $body = null): Environment
     {
-        return Environment::mock($data);
+        $method = strtoupper($method);
+        $base = array(
+            'REQUEST_METHOD' => $method,
+            'REQUEST_URI' => $path,
+        );
+        if ($method !== 'GET') {
+            if ($method === 'POST' && in_array($env['CONTENT_TYPE'],  ['application/x-www-form-urlencoded', 'multipart/form-data'])) {
+                if (is_string($body)) {
+                    parse_str($body, $_POST);
+                } else {
+                    $_POST = $body;
+                }
+            }
+        }
+
+        $env = array_merge($base, $env);
+
+        if ($method === 'POST' && in_array($env['CONTENT_TYPE'],  ['application/x-www-form-urlencoded', 'multipart/form-data'])) {
+            if (is_string($body)) {
+                parse_str($body, $_POST);
+            } else {
+                $_POST = $body;
+            }
+        }
     }
 
     /**
@@ -41,15 +64,15 @@ class Factory
     {
         return Environment::mock($data);
     }
+
     /**
-     *
-     * @param string $method GET, POST, PUT, PATCH, DELETE
+     * @param string $method
      * @param string $path
-     * @param array $env    raw http headers and other and other env vars
-     * @param string|array $body  body content
-     * @return Request
+     * @param string $body
+     * @param array $env
+     * @return RequestInterface
      */
-    public static function getRequest(string $method, string $path, array $env = [], $body = '')
+    public static function getRequest(string $method, string $path,  $body = '', array $env = []): RequestInterface
     {
         $requestBody = null;
         $method = strtoupper($method);
@@ -58,12 +81,21 @@ class Factory
             'REQUEST_URI' => $path,
         );
         if ($method !== 'GET') {
-            $base['CONTENT_LENGTH'] = strlen($body);
+            if ($method === 'POST' && in_array($env['CONTENT_TYPE'],  ['application/x-www-form-urlencoded', 'multipart/form-data'])) {
+                if (is_string($body)) {
+                    parse_str($body, $_POST);
+                    $base['CONTENT_LENGTH'] = strlen($body);
+                } else {
+                    $_POST = $body;
+                    $base['CONTENT_LENGTH'] = strlen(http_build_query($body));
+                }
+            } else {
+                $base['CONTENT_LENGTH'] = strlen($body);
+            }
         }
 
-        $env = array_merge($base, $env);
         $request = Request::createFromEnvironment(
-            Environment::mock(array_merge($base, $env))
+            Environment::mock(array_merge($env, $base))
         );
 
         if ($method !== 'GET') {
