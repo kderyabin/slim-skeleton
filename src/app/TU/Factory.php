@@ -16,7 +16,7 @@ use Slim\Http\Response;
 class Factory
 {
 
-    public static function prepareEnv(string $method, string $path, array $env = [], $body = null): Environment
+    public static function prepareEnv(string $method, string $path, array $serverParams = [], $body = '', array $uploadedFiles = []): Environment
     {
         $method = strtoupper($method);
         $base = array(
@@ -24,64 +24,7 @@ class Factory
             'REQUEST_URI' => $path,
         );
         if ($method !== 'GET') {
-            if ($method === 'POST' && in_array($env['CONTENT_TYPE'],  ['application/x-www-form-urlencoded', 'multipart/form-data'])) {
-                if (is_string($body)) {
-                    parse_str($body, $_POST);
-                } else {
-                    $_POST = $body;
-                }
-            }
-        }
-
-        $env = array_merge($base, $env);
-
-        if ($method === 'POST' && in_array($env['CONTENT_TYPE'],  ['application/x-www-form-urlencoded', 'multipart/form-data'])) {
-            if (is_string($body)) {
-                parse_str($body, $_POST);
-            } else {
-                $_POST = $body;
-            }
-        }
-    }
-
-    /**
-     * Get environment corresponding to the request
-     *
-     * @param ServerRequestInterface $request
-     * @return Environment
-     */
-    public static function getEnvFromRequest(ServerRequestInterface $request)
-    {
-        $server = $request->getServerParams();
-        return Environment::mock($server);
-    }
-
-    /**
-     * @param array $data
-     * @return Environment
-     */
-    protected static function getEnv(array $data): Environment
-    {
-        return Environment::mock($data);
-    }
-
-    /**
-     * @param string $method
-     * @param string $path
-     * @param string $body
-     * @param array $env
-     * @return RequestInterface
-     */
-    public static function getRequest(string $method, string $path,  $body = '', array $env = []): RequestInterface
-    {
-        $requestBody = null;
-        $method = strtoupper($method);
-        $base = array(
-            'REQUEST_METHOD' => $method,
-            'REQUEST_URI' => $path,
-        );
-        if ($method !== 'GET') {
-            if ($method === 'POST' && in_array($env['CONTENT_TYPE'],  ['application/x-www-form-urlencoded', 'multipart/form-data'])) {
+            if ($method === 'POST' && in_array($serverParams['CONTENT_TYPE'],  ['application/x-www-form-urlencoded', 'multipart/form-data'])) {
                 if (is_string($body)) {
                     parse_str($body, $_POST);
                     $base['CONTENT_LENGTH'] = strlen($body);
@@ -93,9 +36,26 @@ class Factory
                 $base['CONTENT_LENGTH'] = strlen($body);
             }
         }
+        if($uploadedFiles) {
+            $base['slim.files'] = $uploadedFiles;
+        }
+        return Environment::mock(array_merge($serverParams, $base));
+    }
+
+    /**
+     * @param string $method
+     * @param string $path
+     * @param array $serverParams
+     * @param string $body
+     * @param array $uploadedFiles
+     * @return RequestInterface
+     */
+    public static function getRequest(string $method, string $path, array $serverParams = [], $body = '', array $uploadedFiles = []): RequestInterface
+    {
+        $requestBody = null;
 
         $request = Request::createFromEnvironment(
-            Environment::mock(array_merge($env, $base))
+            static::prepareEnv()
         );
 
         if ($method !== 'GET') {
