@@ -36,7 +36,7 @@ class TUHelper
             'REQUEST_URI' => $path,
         );
         if ($method !== 'GET') {
-            if ($method === 'POST' && in_array(
+            if ($method === 'POST' && isset($serverParams['CONTENT_TYPE']) && in_array(
                 $serverParams['CONTENT_TYPE'],
                 ['application/x-www-form-urlencoded', 'multipart/form-data']
             )) {
