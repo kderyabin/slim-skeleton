@@ -6,18 +6,18 @@
   convertNoticesToExceptions="false"
   convertWarningsToExceptions="false">
   <testsuites>
-    <testsuite>
-      <directory suffix="Test.php">./tests</directory>
+    <testsuite name="main">
+      <directory suffix="Test.php">./app</directory>
     </testsuite>
   </testsuites>
   <filter>
     <whitelist>
-      <directory suffix=".php">./src</directory>
+      <directory suffix=".php">../src</directory>
     </whitelist>
   </filter>
   <logging>
     <log type="coverage-html"
-         target="./coverage/"
+         target="../coverage/"
          lowUpperBound="50"
          highLowerBound="80"/>
   </logging>

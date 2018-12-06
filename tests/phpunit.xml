@@ -6,13 +6,13 @@
   convertNoticesToExceptions="false"
   convertWarningsToExceptions="false">
   <testsuites>
-    <testsuite>
+    <testsuite name="main">
       <directory suffix="Test.php">./app</directory>
     </testsuite>
   </testsuites>
   <filter>
     <whitelist>
-      <directory suffix=".php">./src</directory>
+      <directory suffix=".php">../src</directory>
     </whitelist>
   </filter>
   <logging>

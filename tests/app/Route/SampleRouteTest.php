@@ -13,16 +13,15 @@ class SampleRouteTest extends TestCase
 
     public static function setUpBeforeClass()
     {
-        static::$config = require TEST_CONF_DIR . '/config.php';
+        //static::$config = require TEST_CONF_DIR . '/config.php';
     }
     /**
      * @testdox Test the SampleRoute only
      */
-    public function testSampleRouteAlone()
+    public function __testSampleRouteAlone()
     {
         $bootstrap = new Bootstrap(App::class, static::$config);
         $bootstrap->addRouteDefinitions(SampleRoute::class);
         $ci = $bootstrap->getContainer();
-        $ci->prepareEnv
     }
 }

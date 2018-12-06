@@ -30,7 +30,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "App\\Tests\\": "tests"
+      "App\\Tests\\": "tests/app"
     }
   },
   "scripts": {
@@ -40,10 +40,10 @@
       "@phpunit"
     ],
     "phpcs": [
-      "env ./bin/phpcs --standard=PSR2 ./src"
+      "env ./bin/phpcs --standard=PSR2 ./src ./tests/app"
     ],
     "phpcs-fix": [
-      "env ./bin/phpcbf --standard=PSR2 ./src"
+      "env ./bin/phpcbf --standard=PSR2 ./src ./tests/app"
     ],
     "phpunit": [
       "env ./bin/phpunit --testdox  -v -c tests/phpunit.xml"
