@@ -1,9 +1,6 @@
 #Emacs
 *~
 \#*\#
-
-#Project
-composer.lock
 coverage
 bin/*
 nbproject

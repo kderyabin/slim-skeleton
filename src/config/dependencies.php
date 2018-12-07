@@ -12,6 +12,7 @@ return [
     },
     'logger' => function (ContainerInterface $ci) {
         return new \Kod\Logger([
+            'levelPriorityMin'  => 'debug',
             'message' => [
                 'fields' => [
                     'request_id' => $_SERVER['HTTP_X_REQUEST_ID'] ?? bin2hex(random_bytes(10)),
