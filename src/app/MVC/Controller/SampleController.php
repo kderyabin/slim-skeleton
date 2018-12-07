@@ -1,4 +1,10 @@
 <?php
+/**
+ * Copyright (c) 2018 Konstantin Deryabin <kderyabin@orange.fr>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace App\MVC\Controller;
 
@@ -14,9 +20,11 @@ class SampleController extends AbstractController
     /**
      * Sample method for generating some content with the SampleView
      *
-     * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param $request
+     * @param $response
+     * @return ResponseInterface
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function main($request, $response)
     {

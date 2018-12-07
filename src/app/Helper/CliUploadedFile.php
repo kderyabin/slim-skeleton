@@ -1,9 +1,9 @@
 <?php
 /**
- * Created by IntelliJ IDEA.
- * User: Konstantin
- * Date: 07/12/2018
- * Time: 10:53
+ * Copyright (c) 2018 Konstantin Deryabin <kderyabin@orange.fr>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace App\Helper;
@@ -20,6 +20,11 @@ use Slim\Http\UploadedFile;
  */
 class CliUploadedFile
 {
+    /**
+     * Copy/paste from UploadedFile::parseUploadedFiles with little changes
+     * @param array $uploadedFiles
+     * @return array
+     */
     public static function parseUploadedFiles(array $uploadedFiles)
     {
         $parsed = [];
