@@ -5,7 +5,6 @@ namespace App\MVC\Controller;
 use App\MVC\View\SampleView;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Slim\Views\PhpRenderer;
 
 /**
  * SampleController
@@ -17,10 +16,9 @@ class SampleController extends AbstractController
      *
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
-     * @param $args
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function main($request, $response, $args)
+    public function main($request, $response)
     {
         $view = new SampleView($this->ci);
         $view->server = $_SERVER;

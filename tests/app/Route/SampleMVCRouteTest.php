@@ -4,12 +4,12 @@ namespace App\Tests\app\Route;
 
 use App\Bootstrap;
 use App\Helper\SlimHttpFactory;
-use App\Route\SampleRoute;
+use App\Route\SampleMVCRoute;
 use PHPUnit\Framework\TestCase;
 use Slim\App;
 use Slim\Http\Response;
 
-class SampleRouteTest extends TestCase
+class SampleMVCRouteTest extends TestCase
 {
     protected static $config = [];
 
@@ -19,19 +19,19 @@ class SampleRouteTest extends TestCase
     }
 
     /**
-     * @testdox Test the SampleRoute output
+     * @testdox Test the SampleMVCRoute output
      */
-    public function testSampleRoute()
+    public function testSampleMVCRoute()
     {
         $config = array_merge(
             static::$config,
-            SlimHttpFactory::mockRequest('GET', '/')
+            SlimHttpFactory::mockRequest('GET', '/mvc')
         );
         /**
          * @var Response $response
          */
         $response = (new Bootstrap(App::class, $config))
-            ->addRouteDefinitions(SampleRoute::class)
+            ->addRouteDefinitions(SampleMVCRoute::class)
             ->run(true);
 
         $this->assertEquals(200, $response->getStatusCode());
@@ -39,17 +39,18 @@ class SampleRouteTest extends TestCase
         $content = (string)$response->getBody();
         // without the middleware the title is empty
         $this->assertContains('<title></title>', $content);
+        // check server vars
         $this->assertContains('[REQUEST_TIME_FLOAT]', $content);
     }
 
     /**
-     * @testdox Test the SampleRoute output in application workflow
+     * @testdox Test the SampleMVCRoute output in application workflow
      */
-    public function testSampleRouteWithMiddleware()
+    public function testSampleMVCRouteWithMiddleware()
     {
         $config = array_merge(
             static::$config,
-            SlimHttpFactory::mockRequest('GET', '/')
+            SlimHttpFactory::mockRequest('GET', '/mvc')
         );
         /**
          * @var Response $response

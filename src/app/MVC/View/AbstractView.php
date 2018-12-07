@@ -26,6 +26,8 @@ abstract class AbstractView extends PhpRenderer
      * AbstractView constructor.
      * @param ContainerInterface $ci
      * @param array $attributes
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function __construct(ContainerInterface $ci, array $attributes = [])
     {
@@ -70,7 +72,7 @@ abstract class AbstractView extends PhpRenderer
      */
     public function getResponse(ResponseInterface $response)
     {
-        $response->getBody()->write($this->fetchContent());
+        $response->getBody()->write((string) $this);
 
         return $response;
     }

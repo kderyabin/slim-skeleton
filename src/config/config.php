@@ -1,5 +1,5 @@
 <?php
 return array_merge(
-    ['settings' => require_once __DIR__ .'/settings.php'],
-    require_once __DIR__ .'/dependencies.php'
+    ['settings' => require __DIR__ .'/settings.php'],
+    require __DIR__ .'/dependencies.php'
 );

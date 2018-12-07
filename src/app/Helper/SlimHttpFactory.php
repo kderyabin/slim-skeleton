@@ -9,10 +9,10 @@ use Slim\Http\RequestBody;
 use Slim\Http\Response;
 
 /**
- * Class TUHelper
+ * Class SlimHttpFactory
  * @package App\Helper
  */
-class TUHelper
+class SlimHttpFactory
 {
     /**
      * @param string $method
@@ -22,7 +22,7 @@ class TUHelper
      * @param array $uploadedFiles
      * @return array
      */
-    public static function prepareRequest(
+    public static function mockRequest(
         string $method,
         string $path,
         array $serverParams = [],
@@ -41,19 +41,20 @@ class TUHelper
                 ['application/x-www-form-urlencoded', 'multipart/form-data']
             )) {
                 if (is_string($body)) {
-                    parse_str($body, $_POST);
+                    //parse_str($body, $_POST);
                     $base['CONTENT_LENGTH'] = strlen($body);
                 } else {
-                    $_POST = $body;
+                    //$_POST = $body;
                     $body = http_build_query($body);
                     $base['CONTENT_LENGTH'] = strlen($body);
+                }
+
+                if ($uploadedFiles && $serverParams['CONTENT_TYPE'] === 'multipart/form-data') {
+                    $base['slim.files'] = CliUploadedFile::parseUploadedFiles($uploadedFiles);
                 }
             } else {
                 $base['CONTENT_LENGTH'] = strlen($body);
             }
-        }
-        if ($uploadedFiles) {
-            $base['slim.files'] = $uploadedFiles;
         }
         $environment = Environment::mock(
             array_merge($serverParams, $base)
@@ -76,7 +77,7 @@ class TUHelper
      * @param int $httpCode
      * @return Response
      */
-    public static function getResponse($httpCode = 200, $headers = [], $body = '')
+    public static function mockResponse($httpCode = 200, $headers = [], $body = '')
     {
         $head = new Headers();
         if (count($headers) > 0) {

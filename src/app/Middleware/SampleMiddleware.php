@@ -4,7 +4,6 @@ namespace App\Middleware;
 
 use Kod\BootstrapSlim\Middleware;
 use Kod\Logger;
-use Kod\Utils\Date;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 

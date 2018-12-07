@@ -18,7 +18,7 @@ class SampleRoute extends RouteDefinitions
      * @see https://www.slimframework.com/docs/v3/objects/router.html#how-to-create-routes
      * @param App $app
      */
-    public function __invoke($app)
+    public function __invoke($app): void
     {
         $app->get('/', function (ServerRequestInterface $request, ResponseInterface $response, $args) {
             /**
