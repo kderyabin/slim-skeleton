@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title><?php echo $title;?></title>
+</head>
+<body>
+    <h1><?php echo $title;?></h1>
+    <pre>
+    <?php print_r($data);?>
+    </pre>
+<?php php_sapi_name() == 'cli-server'?>
+</body>
+</html>
