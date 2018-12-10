@@ -9,8 +9,8 @@
 namespace App\MVC\Controller;
 
 use App\MVC\View\SampleView;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 /**
  * SampleController
@@ -20,16 +20,16 @@ class SampleController extends AbstractController
     /**
      * Sample method for generating some content with the SampleView
      *
-     * @param $request
-     * @param $response
-     * @return ResponseInterface
+     * @param Request $request
+     * @param Response $response
+     * @return Response
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function main($request, $response)
     {
         $view = new SampleView($this->ci);
-        $view->server = $_SERVER;
+        $view->server =$this->ci->get('environment')->all();
         $view->title = $request->getAttribute('title');
         return $view->getResponse($response);
     }

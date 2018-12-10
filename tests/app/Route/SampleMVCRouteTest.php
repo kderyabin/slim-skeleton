@@ -3,10 +3,10 @@
 namespace App\Tests\app\Route;
 
 use App\Bootstrap;
-use App\Helper\SlimHttpFactory;
 use App\Route\SampleMVCRoute;
 use PHPUnit\Framework\TestCase;
 use Slim\App;
+use Slim\Http\Environment;
 use Slim\Http\Response;
 
 class SampleMVCRouteTest extends TestCase
@@ -25,7 +25,12 @@ class SampleMVCRouteTest extends TestCase
     {
         $config = array_merge(
             static::$config,
-            SlimHttpFactory::mockRequest('GET', '/mvc')
+            [
+                'environment' =>  Environment::mock([
+                    'REQUEST_METHOD' => 'GET',
+                    'REQUEST_URI' => '/mvc',
+                ])
+            ]
         );
         /**
          * @var Response $response
@@ -50,7 +55,12 @@ class SampleMVCRouteTest extends TestCase
     {
         $config = array_merge(
             static::$config,
-            SlimHttpFactory::mockRequest('GET', '/mvc')
+            [
+                'environment' =>  Environment::mock([
+                    'REQUEST_METHOD' => 'GET',
+                    'REQUEST_URI' => '/mvc',
+                ])
+            ]
         );
         /**
          * @var Response $response

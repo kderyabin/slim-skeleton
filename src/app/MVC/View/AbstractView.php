@@ -10,6 +10,7 @@ namespace App\MVC\View;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
+use Slim\Http\Response;
 use Slim\Views\PhpRenderer;
 
 /**
@@ -74,7 +75,7 @@ abstract class AbstractView extends PhpRenderer
 
     /**
      * @param ResponseInterface $response
-     * @return ResponseInterface
+     * @return ResponseInterface|Response
      */
     public function getResponse(ResponseInterface $response)
     {
