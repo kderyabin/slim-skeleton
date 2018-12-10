@@ -12,6 +12,8 @@ use Kod\BootstrapSlim\Middleware;
 use Kod\Logger;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 /**
  * SampleMiddleware
@@ -19,14 +21,14 @@ use Psr\Http\Message\ServerRequestInterface;
 class SampleMiddleware extends Middleware
 {
     /**
-     * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
+     * @param Request $request
+     * @param Response $response
      * @param callable $next
-     * @return ResponseInterface
+     * @return Response
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, $next)
+    public function __invoke($request, $response, $next)
     {
         $start = round(microtime(true) * 1000);
         /**
@@ -34,13 +36,17 @@ class SampleMiddleware extends Middleware
          */
         $logger = $this->ci->get('logger');
         /**
-         * @var ResponseInterface $response
+         * @var Request $request
          */
         $request = $request->withAttribute('title', 'Sample');
+        /**
+         * @var Response $response
+         */
         $response = $next($request, $response);
+
         $data = [
             'response_size' => $response->getBody()->getSize(),
-            'response_time' => round(microtime(true) * 1000) - $start,
+            'response_time' => round(microtime(true) * 1000 - $start),
             'status' => $response->getStatusCode(),
         ];
 

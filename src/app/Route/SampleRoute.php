@@ -34,7 +34,7 @@ class SampleRoute extends RouteDefinitions
             $renderer = $this->get('renderer');
             $content = [
                 'title' => $request->getAttribute('title'),
-                'data' => $_SERVER,
+                'data' => $this->get('environment')->all(),
             ];
 
             return $renderer->render($response, 'sample.phtml', $content);
